@@ -3,7 +3,7 @@ Offer a Golang logger based on Lalamove k8s logging format.
 
 # Usage
 ```
-go get -u 
+go get -u github.com/lalamove/logs
 ```
 # Run Test
 ```
