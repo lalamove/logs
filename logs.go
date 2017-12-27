@@ -78,7 +78,7 @@ func NewLalamoveEncoderConfig() zapcore.EncoderConfig {
 	}
 }
 
-// NewLalamoveZapConfig will create an config for zap
+// NewLalamoveZapConfig will create a config for zap
 func NewLalamoveZapConfig() *zap.Config {
 	return &zap.Config{
 		Level:            zap.NewAtomicLevelAt(zapcore.DebugLevel),
@@ -93,7 +93,7 @@ func NewLalamoveZapConfig() *zap.Config {
 // LalamoveLevelEncoder will convert the warn display string to warning
 func LalamoveLevelEncoder(l zapcore.Level, enc zapcore.PrimitiveArrayEncoder) {
 	if l.String() == zapcore.WarnLevel.String() {
-		// Convert warn to warning
+		// Set warn label to warning
 		enc.AppendString(Warning)
 	} else {
 		enc.AppendString(l.String())
@@ -105,7 +105,7 @@ func LalamoveISO8601TimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) 
 	enc.AppendString(t.UTC().Format(ISO8601))
 }
 
-// Logger will create an zap based logger
+// Logger will create a zap based logger
 // return a *zap.Logger for logging
 func Logger() *zap.Logger {
 	// Skip this function
