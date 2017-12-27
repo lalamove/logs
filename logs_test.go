@@ -8,10 +8,10 @@ import (
 )
 
 func TestGetLalamoveLoggerPassDebug(t *testing.T) {
-	lalamove.Logger().Debug("I am not a Debug")
-	lalamove.Logger().Info("I am not an Info")
-	lalamove.Logger().Warn("I am not a Warn")
-	lalamove.Logger().Error("I am not an Error")
+	lalamove.Logger().Debug("I am a Debug")
+	lalamove.Logger().Info("I am an Info")
+	lalamove.Logger().Warn("I am a Warn")
+	lalamove.Logger().Error("I am an Error")
 	// It should not be called as the it will return exit code 3
 	// Logger().Fatal("I am not a Fatal")
 	// By default, loggers are unbuffered. However, since zap's low-level APIs allow buffering,
