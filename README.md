@@ -26,6 +26,9 @@ func main(){
     lalamove.Logger().Fatal("I am a Fatal")
     // {"level":"fatal","time":"2017-12-23T05:30:41.901899661Z","src_file":"logs/logs_test.go:49","message":"I am a Fatal","src_line":"49","backtrace":"github.com/logs.TestGetLalamoveLoggerPassFatal\n\t/home/alpha/works/src/github.com/logs/logs_test.go:49\ntesting.tRunner\n\t/home/alpha/go/src/testing/testing.go:746"}
 
+    lalamove.Logger().Debug("I am a Debug", zap.String("f0", "I go to school by bus"),zap.String("f1", "Goodest english"))
+    // {"level":"debug","time":"2018-01-03T03:42:42.145362160Z","src_file":"logs/logs_test.go:40","message":"I am a Debug","src_line":"40","fields":{"f0":"I go to school by bus","f1":"Goodest english"}}
+
     // Remember to close the logger
    defer lalamove.Logger().Sync()
 }
