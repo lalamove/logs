@@ -127,5 +127,5 @@ func Logger() *zap.Logger {
 
 	Logger, _ := cfg.Build()
 	defer Logger.Sync()
-	return Logger.WithOptions(showSourceLine)
+	return Logger.WithOptions(showSourceLine).With(zap.Namespace("fields"))
 }
