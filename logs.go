@@ -106,6 +106,7 @@ func LalamoveISO8601TimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) 
 }
 
 // Logger will create a zap based logger
+// Extra field will inside fields namespace
 // return a *zap.Logger for logging
 func Logger() *zap.Logger {
 	// Skip this function

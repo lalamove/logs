@@ -3,7 +3,7 @@ package logs_test
 import (
 	"testing"
 
-	lalamove "github.com/lalamove/logs"
+	lalamove "github.com/lalamove-go/logs"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 )
@@ -35,9 +35,8 @@ func TestGetLalamoveLoggerPassDebug(t *testing.T) {
 //        "f1": "Goodest english"
 //    }
 //}
-
 func TestGetLalamoveLoggerPassDebugWithRootLevelNamespace(t *testing.T) {
-	lalamove.Logger().Debug("I am a Debug", zap.String("f0", "I go to school by bus"),zap.String("f1", "Goodest english"))
+	lalamove.Logger().Debug("I am a Debug", zap.String("f0", "I go to school by bus"), zap.String("f1", "Goodest english"))
 	defer lalamove.Logger().Sync()
 	assert.True(t, true)
 }
