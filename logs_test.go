@@ -22,7 +22,7 @@ func TestGetLalamoveLoggerPassDebug(t *testing.T) {
 }
 
 // TestGetLalamoveLoggerPassDebugWithRootLevelNamespace will test the extra fields.
-// The extra fields should always instead the fields namespace.
+// The extra fields should always instead the context namespace.
 // expected result
 //{
 //    "level": "debug",
@@ -30,7 +30,7 @@ func TestGetLalamoveLoggerPassDebug(t *testing.T) {
 //    "src_file": "logs/logs_test.go:27",
 //    "message": "I am a Debug",
 //    "src_line": "27",
-//    "fields": {
+//    "context": {
 //        "f0": "I go to school by bus",
 //        "f1": "Goodest english"
 //    }
