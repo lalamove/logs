@@ -22,16 +22,16 @@
 //
 // Reference: https://lalamove.atlassian.net/wiki/spaces/TECH/pages/82149406/Kubernetes
 // Lalamove kubernetes logging format
-// {
-// 		"message": "", // string describing what happened
-// 		"src_file": "", // file path
-// 		"src_line": "", // line number
-// 		"fields": {}, // custom field here
-// 		"level": "", // debug/info/warning/error/fatal
-// 		"time": "", // ISO8601.nanoseconds+TZ (in node only support precision up to milliseconds)
-// 		"backtrace": "" // err stack
-// }
-//
+//{
+//    "message": "", // string describing what happened
+//    "src_file": "", // file path
+//    "src_line": "", // line number
+//    "context": {}, // custom field here
+//    "level": "", // debug/info/warning/error/fatal
+//    "time": "", // ISO8601.nanoseconds+TZ (in node only support precision up to milliseconds)
+//    "backtrace": "" // err stack
+//}
+
 package logs
 
 import (
@@ -128,5 +128,5 @@ func Logger() *zap.Logger {
 
 	Logger, _ := cfg.Build()
 	defer Logger.Sync()
-	return Logger.WithOptions(showSourceLine).With(zap.Namespace("fields"))
+	return Logger.WithOptions(showSourceLine).With(zap.Namespace("context"))
 }
