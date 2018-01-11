@@ -41,17 +41,19 @@ import (
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"os"
 )
 
 const (
 	ISO8601 = "2006-01-02T15:04:05.000000000Z0700"
 
-	TimeKey       = "time"
-	LevelKey      = "level"
-	CallerKey     = "src_file"
-	SourceLineKey = "src_line"
-	MessageKey    = "message"
-	StacktraceKey = "backtrace"
+	TimeKey        = "time"
+	LevelKey       = "level"
+	CallerKey      = "src_file"
+	SourceLineKey  = "src_line"
+	MessageKey     = "message"
+	StacktraceKey  = "backtrace"
+	CustomFieldKey = "context"
 
 	Warning = "warning"
 
@@ -59,15 +61,16 @@ const (
 )
 
 var (
-	OutputPaths      = []string{"stdout"}
-	ErrorOutputPaths = []string{"stderr"}
-	Log              *zap.Logger
-	cfg              *zap.Config
+	Log *zap.Logger
 )
 
+// init a logger instance once only
 func init() {
-	cfg = NewLalamoveZapConfig()
-	Log, _ = cfg.Build()
+	if nil == Log {
+		// Reference : https://github.com/uber-go/zap/blob/de8aa9e8396ccd3e2c734089fe010747f74d60ce/logger.go#L118
+		core := zapcore.NewCore(zapcore.NewJSONEncoder(*NewLalamoveEncoderConfig()), os.Stdout, zap.DebugLevel)
+		Log = zap.New(core)
+	}
 }
 
 // NewLalamoveEncoderConfig will create an EncoderConfig
@@ -83,18 +86,6 @@ func NewLalamoveEncoderConfig() *zapcore.EncoderConfig {
 		EncodeTime:     LalamoveISO8601TimeEncoder,
 		EncodeDuration: zapcore.StringDurationEncoder,
 		EncodeCaller:   zapcore.ShortCallerEncoder,
-	}
-}
-
-// NewLalamoveZapConfig will create a config for zap
-func NewLalamoveZapConfig() *zap.Config {
-	return &zap.Config{
-		Level:            zap.NewAtomicLevelAt(zapcore.DebugLevel),
-		Development:      false,
-		Encoding:         EncodingType,
-		EncoderConfig:    *NewLalamoveEncoderConfig(),
-		OutputPaths:      OutputPaths,
-		ErrorOutputPaths: ErrorOutputPaths,
 	}
 }
 
@@ -117,20 +108,9 @@ func LalamoveISO8601TimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) 
 // Extra field will inside fields namespace
 // return a *zap.Logger for logging
 func Logger() *zap.Logger {
-	// Skip this function
-	_, _, fl, _ := runtime.Caller(1)
+	// Skip this function by one
+	// ln int is line number of source file
+	_, _, ln, _ := runtime.Caller(1)
 
-	showSourceLine := zap.WrapCore(func(c zapcore.Core) zapcore.Core {
-		return zapcore.NewTee(
-			c.With([]zapcore.Field{
-				{
-					Key:    SourceLineKey,
-					Type:   zapcore.StringType,
-					String: strconv.Itoa(fl),
-				},
-			}),
-		)
-	})
-
-	return Log.WithOptions(showSourceLine).With(zap.Namespace("context"))
+	return Log.With(zap.String(SourceLineKey, strconv.FormatInt(int64(ln), 10)), zap.Namespace(CustomFieldKey))
 }

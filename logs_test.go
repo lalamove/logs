@@ -37,6 +37,7 @@ func TestGetLalamoveLoggerPassDebug(t *testing.T) {
 //}
 func TestGetLalamoveLoggerPassDebugWithRootLevelNamespace(t *testing.T) {
 	lalamove.Logger().Debug("I am a Debug", zap.String("f0", "I go to school by bus"), zap.String("f1", "Goodest english"))
+	lalamove.Logger().Debug("I am a Debug", zap.String("f2", "I go to school by MTR"), zap.String("f3", "Goodest cantonese"))
 	defer lalamove.Logger().Sync()
 	assert.True(t, true)
 }
