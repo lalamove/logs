@@ -36,8 +36,13 @@ func main(){
 
 ```
 # Run test
-```
+```sh
 go test . -v
+```
+
+# Run benchmark
+```sh
+go test -bench=. -benchmem
 ```
 
 # Report issue
@@ -47,6 +52,7 @@ alpha.wong@lalamove.com
 - francois.parquet@lalamove.com
 - mikael.knutsson@lalamove.com
 - milan.r@lalamove.com
+- simon.tse@lalamove.com
 
 # License
 Released under the MIT License.

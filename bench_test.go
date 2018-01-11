@@ -1,8 +1,5 @@
 package logs_test
 
-// Run
-// go test -bench=. -benchmem
-
 import (
 	"testing"
 
