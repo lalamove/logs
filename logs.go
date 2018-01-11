@@ -46,12 +46,6 @@ import (
 const (
 	ISO8601 = "2006-01-02T15:04:05.000000000Z0700"
 
-	Debug   = "debug"
-	Info    = "info"
-	Warning = "warning"
-	Error   = "error"
-	Fatal   = "fatal"
-
 	TimeKey       = "time"
 	LevelKey      = "level"
 	CallerKey     = "src_file"
@@ -59,12 +53,26 @@ const (
 	MessageKey    = "message"
 	StacktraceKey = "backtrace"
 
+	Warning = "warning"
+
 	EncodingType = "json"
 )
 
+var (
+	OutputPaths      = []string{"stdout"}
+	ErrorOutputPaths = []string{"stderr"}
+	Log              *zap.Logger
+	cfg              *zap.Config
+)
+
+func init() {
+	cfg = NewLalamoveZapConfig()
+	Log, _ = cfg.Build()
+}
+
 // NewLalamoveEncoderConfig will create an EncoderConfig
-func NewLalamoveEncoderConfig() zapcore.EncoderConfig {
-	return zapcore.EncoderConfig{
+func NewLalamoveEncoderConfig() *zapcore.EncoderConfig {
+	return &zapcore.EncoderConfig{
 		TimeKey:        TimeKey,
 		LevelKey:       LevelKey,
 		CallerKey:      CallerKey,
@@ -82,17 +90,17 @@ func NewLalamoveEncoderConfig() zapcore.EncoderConfig {
 func NewLalamoveZapConfig() *zap.Config {
 	return &zap.Config{
 		Level:            zap.NewAtomicLevelAt(zapcore.DebugLevel),
-		Development:      true,
+		Development:      false,
 		Encoding:         EncodingType,
-		EncoderConfig:    NewLalamoveEncoderConfig(),
-		OutputPaths:      []string{"stdout", "/tmp/logs"},
-		ErrorOutputPaths: []string{"stderr"},
+		EncoderConfig:    *NewLalamoveEncoderConfig(),
+		OutputPaths:      OutputPaths,
+		ErrorOutputPaths: ErrorOutputPaths,
 	}
 }
 
 // LalamoveLevelEncoder will convert the warn display string to warning
 func LalamoveLevelEncoder(l zapcore.Level, enc zapcore.PrimitiveArrayEncoder) {
-	if l.String() == zapcore.WarnLevel.String() {
+	if l == zapcore.WarnLevel {
 		// Set warn label to warning
 		enc.AppendString(Warning)
 	} else {
@@ -112,8 +120,6 @@ func Logger() *zap.Logger {
 	// Skip this function
 	_, _, fl, _ := runtime.Caller(1)
 
-	cfg := NewLalamoveZapConfig()
-
 	showSourceLine := zap.WrapCore(func(c zapcore.Core) zapcore.Core {
 		return zapcore.NewTee(
 			c.With([]zapcore.Field{
@@ -126,7 +132,5 @@ func Logger() *zap.Logger {
 		)
 	})
 
-	Logger, _ := cfg.Build()
-	defer Logger.Sync()
-	return Logger.WithOptions(showSourceLine).With(zap.Namespace("context"))
+	return Log.WithOptions(showSourceLine).With(zap.Namespace("context"))
 }
