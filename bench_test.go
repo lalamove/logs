@@ -30,12 +30,12 @@ func BenchmarkLalamoveLogger(b *testing.B) {
 // 100000	     14700 ns/op	     272 B/op	       7 allocs/op
 // 100000	     14719 ns/op	     272 B/op	       7 allocs/op
 // 100000	     14725 ns/op	     272 B/op	       7 allocs/op
-//func BenchmarkUberZapLogger(b *testing.B) {
-//	logger, _ := zap.NewDevelopment()
-//	b.RunParallel(func(pb *testing.PB) {
-//		for pb.Next() {
-//			logger.Debug("I am a Debug", zap.String("f0", "I go to school by bus"), zap.String("f1", "Goodest english"))
-//		}
-//		logger.Sync()
-//	})
-//}
+func BenchmarkUberZapLogger(b *testing.B) {
+	logger, _ := zap.NewDevelopment()
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			logger.Debug("I am a Debug", zap.String("f0", "I go to school by bus"), zap.String("f1", "Goodest english"))
+		}
+		logger.Sync()
+	})
+}

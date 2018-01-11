@@ -45,6 +45,15 @@ go test . -v
 go test -bench=. -benchmem
 ```
 
+# Benchmark
+```
+lalamove-go/logs
+100000	     18011 ns/op	    1521 B/op	       8 allocs/op
+
+go.uber.org/zap
+100000	     14725 ns/op	     272 B/op	       7 allocs/op
+```
+
 # Report issue
 alpha.wong@lalamove.com
 
