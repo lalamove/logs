@@ -17,7 +17,55 @@ import (
 // 100000	     19796 ns/op	    1602 B/op	      12 allocs/op ( Move the namespace to core level option )
 // 100000	     18141 ns/op	    1569 B/op	      11 allocs/op ( Remove NewLalamoveZapConfig function and replace it by zapcore.NewCore )
 // 100000	     18011 ns/op	    1521 B/op	       8 allocs/op ( Remove zap.WrapCore function and replace it by Logger.With )
-func BenchmarkLalamoveLogger(b *testing.B) {
+// 100000	     21891 ns/op	    1585 B/op	       8 allocs/op ( Use native caller option )
+// 100000	     20152 ns/op	    1554 B/op	       9 allocs/op ( Use all zap builtin caller option )
+// 1000000	      1812 ns/op	    1542 B/op	       8 allocs/op ( Use zap.NewProductionConfig() )
+//{
+//    "level":"error",
+//    "time":"2018-01-12T03:46:33.991083023Z",
+//    "src_file":"logs/bench_test.go:27",
+//    "message":"I am a Debug",
+//    "src_line":"27",
+//    "context":{
+//        "f0":"I go to school by bus",
+//        "f1":"Goodest english"
+//    },
+//    "backtrace":"github.com/lalamove-go/logs_test.BenchmarkLalamoveErrorLogger.func1\n\t/home/alpha/works/src/github.com/lalamove-go/logs/bench_test.go:27\ntesting.(*B).RunParallel.func1\n\t/home/alpha/go/src/testing/benchmark.go:625"
+//}
+func BenchmarkLalamoveErrorLogger(b *testing.B) {
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			lalamove.Logger().Error("I am a Debug", zap.String("f0", "I go to school by bus"), zap.String("f1", "Goodest english"))
+		}
+		lalamove.Logger().Sync()
+	})
+
+}
+
+//{
+//   "level":"error",
+//   "ts":1515729052.9642668,
+//   "caller":"logs/bench_test.go:59",
+//   "msg":"I am a Debug",
+//   "context":{
+//      "f0":"I go to school by bus",
+//      "f1":"Goodest english"
+//   },
+//   "stacktrace":"github.com/lalamove-go/logs_test.BenchmarkUberZapErrorLogger.func1\n\t/home/alpha/works/src/github.com/lalamove-go/logs/bench_test.go:59\ntesting.(*B).RunParallel.func1\n\t/home/alpha/go/src/testing/benchmark.go:625"
+//}
+// 1000000	      1385 ns/op	    1479 B/op	       8 allocs/op
+func BenchmarkUberZapErrorLogger(b *testing.B) {
+	logger, _ := zap.NewProduction()
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			logger.With(zap.Namespace(lalamove.CustomFieldKey)).Error("I am a Debug", zap.String("f0", "I go to school by bus"), zap.String("f1", "Goodest english"))
+		}
+		logger.Sync()
+	})
+}
+
+// 1000000	      1828 ns/op	    1537 B/op	       8 allocs/op
+func BenchmarkLalamoveDebugLogger(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
 			lalamove.Logger().Debug("I am a Debug", zap.String("f0", "I go to school by bus"), zap.String("f1", "Goodest english"))
@@ -27,14 +75,24 @@ func BenchmarkLalamoveLogger(b *testing.B) {
 
 }
 
-// 100000	     14700 ns/op	     272 B/op	       7 allocs/op
-// 100000	     14719 ns/op	     272 B/op	       7 allocs/op
-// 100000	     14725 ns/op	     272 B/op	       7 allocs/op
-func BenchmarkUberZapLogger(b *testing.B) {
-	logger, _ := zap.NewDevelopment()
+//{
+//   "level":"debug",
+//   "ts":1515729585.4879098,
+//   "caller":"logs/bench_test.go:84",
+//   "msg":"I am a Debug",
+//   "context":{
+//      "f0":"I go to school by bus",
+//      "f1":"Goodest english"
+//   }
+//}
+// 1000000	      1098 ns/op	    1474 B/op	       8 allocs/op
+func BenchmarkUberZapDebugLogger(b *testing.B) {
+	cfg := zap.NewProductionConfig()
+	cfg.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
+	logger, _ := cfg.Build()
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
-			logger.Debug("I am a Debug", zap.String("f0", "I go to school by bus"), zap.String("f1", "Goodest english"))
+			logger.With(zap.Namespace(lalamove.CustomFieldKey)).Debug("I am a Debug", zap.String("f0", "I go to school by bus"), zap.String("f1", "Goodest english"))
 		}
 		logger.Sync()
 	})

@@ -41,7 +41,6 @@ import (
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"os"
 )
 
 const (
@@ -50,14 +49,13 @@ const (
 	TimeKey        = "time"
 	LevelKey       = "level"
 	CallerKey      = "src_file"
-	SourceLineKey  = "src_line"
 	MessageKey     = "message"
 	StacktraceKey  = "backtrace"
 	CustomFieldKey = "context"
 
-	Warning = "warning"
+	SourceLineKey = "src_line"
 
-	EncodingType = "json"
+	Warning = "warning"
 )
 
 var (
@@ -67,9 +65,10 @@ var (
 // init a logger instance once only
 func init() {
 	if nil == Log {
-		// Reference : https://github.com/uber-go/zap/blob/de8aa9e8396ccd3e2c734089fe010747f74d60ce/logger.go#L118
-		core := zapcore.NewCore(zapcore.NewJSONEncoder(*NewLalamoveEncoderConfig()), os.Stdout, zap.DebugLevel)
-		Log = zap.New(core)
+		cfg := zap.NewProductionConfig()
+		cfg.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
+		cfg.EncoderConfig = *NewLalamoveEncoderConfig()
+		Log, _ = cfg.Build()
 	}
 }
 

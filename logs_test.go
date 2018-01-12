@@ -21,7 +21,7 @@ func TestGetLalamoveLoggerPassDebug(t *testing.T) {
 	assert.True(t, true)
 }
 
-// TestGetLalamoveLoggerPassDebugWithRootLevelNamespace will test the extra fields.
+// TestGetLalamoveLoggerPassErrorWithRootLevelNamespace will test the extra fields.
 // The extra fields should always instead the context namespace.
 // expected result
 //{
@@ -35,9 +35,9 @@ func TestGetLalamoveLoggerPassDebug(t *testing.T) {
 //        "f1": "Goodest english"
 //    }
 //}
-func TestGetLalamoveLoggerPassDebugWithRootLevelNamespace(t *testing.T) {
-	lalamove.Logger().Debug("I am a Debug", zap.String("f0", "I go to school by bus"), zap.String("f1", "Goodest english"))
-	lalamove.Logger().Debug("I am a Debug", zap.String("f2", "I go to school by MTR"), zap.String("f3", "Goodest cantonese"))
+func TestGetLalamoveLoggerPassErrorWithRootLevelNamespace(t *testing.T) {
+	lalamove.Logger().Error("I am a Debug", zap.String("f0", "I go to school by bus"), zap.String("f1", "Goodest english"))
+	lalamove.Logger().Error("I am a Debug", zap.String("f2", "I go to school by MTR"), zap.String("f3", "Goodest cantonese"))
 	defer lalamove.Logger().Sync()
 	assert.True(t, true)
 }
