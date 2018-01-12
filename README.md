@@ -54,7 +54,7 @@ lalamove-go/logs
 1000000	      1812 ns/op	    1542 B/op	       8 allocs/op
 
 go.uber.org/zap
-1000000	      1385 ns/op	    1479 B/op	       8 allocs/opop
+1000000	      1385 ns/op	    1479 B/op	       8 allocs/op
 ```
 
 # Report issue
