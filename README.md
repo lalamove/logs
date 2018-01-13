@@ -8,6 +8,27 @@ go get -u github.com/lalamove-go/logs
 
 # Importance
 The backtrace will only show while the level => Error
+``` go
+// Reference : https://github.com/uber-go/zap/blob/master/config.go#L63
+// By default, stacktraces are captured for WarnLevel and above logs in
+// development and ErrorLevel and above in production.
+```
+
+# Performance
+```go
+// Reference : https://github.com/uber-go/zap/blob/master/field.go#L182
+// Stack constructs a field that stores a stacktrace of the current goroutine
+// under provided key. Keep in mind that taking a stacktrace is eager and
+// expensive (relatively speaking); this function both makes an allocation and
+// takes about two microseconds.
+func Stack(key string) zapcore.Field {
+	// Returning the stacktrace as a string costs an allocation, but saves us
+	// from expanding the zapcore.Field union struct to include a byte slice. Since
+	// taking a stacktrace is already so expensive (~10us), the extra allocation
+	// is okay.
+	return String(key, takeStacktrace())
+}
+```
 
 # Usage
 ```go
