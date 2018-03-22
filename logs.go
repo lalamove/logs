@@ -84,7 +84,7 @@ func NewLalamoveEncoderConfig() *zapcore.EncoderConfig {
 		EncodeLevel:    LalamoveLevelEncoder,
 		EncodeTime:     LalamoveISO8601TimeEncoder,
 		EncodeDuration: zapcore.StringDurationEncoder,
-		EncodeCaller:   zapcore.ShortCallerEncoder,
+		EncodeCaller:   LalamoveCallerEncoder,
 	}
 }
 
@@ -96,6 +96,10 @@ func LalamoveLevelEncoder(l zapcore.Level, enc zapcore.PrimitiveArrayEncoder) {
 	} else {
 		enc.AppendString(l.String())
 	}
+}
+
+func LalamoveCallerEncoder(caller zapcore.EntryCaller, enc zapcore.PrimitiveArrayEncoder) {
+	enc.AppendString(caller.File)
 }
 
 // LalamoveISO8601TimeEncoder will convert the time to ISO8601 based on Lalamove k8s logging format
