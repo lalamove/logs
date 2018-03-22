@@ -27,7 +27,7 @@ func TestGetLalamoveLoggerPassDebug(t *testing.T) {
 //{
 //    "level": "debug",
 //    "time": "2018-01-03T03:40:02.087012761Z",
-//    "src_file": "logs/logs_test.go:27",
+//    "src_file": "logs/logs_test.go",
 //    "message": "I am a Debug",
 //    "src_line": "27",
 //    "context": {
