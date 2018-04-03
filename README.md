@@ -36,22 +36,23 @@ import lalamove "github.com/lalamove-go/logs"
 
 func main(){
     lalamove.Logger().Debug("I am a Debug")
-  // {"level":"debug","time":"2018-03-22T02:18:43.428168664Z","src_file":"/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go","message":"I am a Debug","src_line":"12","context":{}}
+    // {"level":"debug","time":"2018-03-22T02:18:43.428168664Z","src_file":"/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go","message":"I am a Debug","src_line":"12","context":{}}
 
     lalamove.Logger().Info("I am an Info")
-  // {"level":"info","time":"2018-03-22T02:18:43.428218327Z","src_file":"/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go","message":"I am an Info","src_line":"13","context":{}}
+    // {"level":"info","time":"2018-03-22T02:18:43.428218327Z","src_file":"/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go","message":"I am an Info","src_line":"13","context":{}}
 
     lalamove.Logger().Warn("I am a Warn")
-  // {"level":"warning","time":"2018-03-22T02:18:43.428246914Z","src_file":"/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go","message":"I am a Warn","src_line":"14","context":{}}
+    // {"level":"warning","time":"2018-03-22T02:18:43.428246914Z","src_file":"/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go","message":"I am a Warn","src_line":"14","context":{}}
+
     lalamove.Logger().Error("I am an Error")
-  // {"level":"error","time":"2018-03-22T02:18:43.428294281Z","src_file":"/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go","message":"I am an Error","src_line":"15","context":{},"backtrace":"github.com/lalamove-go/logs_test.TestGetLalamoveLoggerPassDebug\n\t/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go:15\ntesting.tRunner\n\t/home/alpha/go/src/testing/testing.go:777"}
+    // {"level":"error","time":"2018-03-22T02:18:43.428294281Z","src_file":"/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go","message":"I am an Error","src_line":"15","context":{},"backtrace":"github.com/lalamove-go/logs_test.TestGetLalamoveLoggerPassDebug\n\t/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go:15\ntesting.tRunner\n\t/home/alpha/go/src/testing/testing.go:777"}
 
     lalamove.Logger().Fatal("I am a Fatal")
-  // {"level":"error","time":"2018-03-22T02:18:43.428428285Z","src_file":"/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go","message":"I am a Debug","src_line":"39","context":{"f0":"I go to school by bus","f1":"Goodest english"},"backtrace":"github.com/lalamove-go/logs_test.TestGetLalamoveLoggerPassErrorWithRootLevelNamespace\n\t/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go:39\ntesting.tRunner\n\t/home/alpha/go/src/testing/testing.go:777"}  
+    // {"level":"error","time":"2018-03-22T02:18:43.428428285Z","src_file":"/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go","message":"I am a Debug","src_line":"39","context":{"f0":"I go to school by bus","f1":"Goodest english"},"backtrace":"github.com/lalamove-go/logs_test.TestGetLalamoveLoggerPassErrorWithRootLevelNamespace\n\t/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go:39\ntesting.tRunner\n\t/home/alpha/go/src/testing/testing.go:777"}  
 
     // Testing with extra fields
     lalamove.Logger().Debug("I am a Debug", zap.String("f0", "I go to school by bus"),zap.String("f1", "Goodest english"))
-  // {"level":"error","time":"2018-03-22T02:18:43.428491016Z","src_file":"/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go","message":"I am a Debug","src_line":"40","context":{"f2":"I go to school by MTR","f3":"Goodest cantonese"},"backtrace":"github.com/lalamove-go/logs_test.TestGetLalamoveLoggerPassErrorWithRootLevelNamespace\n\t/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go:40\ntesting.tRunner\n\t/home/alpha/go/src/testing/testing.go:777"}
+    // {"level":"error","time":"2018-03-22T02:18:43.428491016Z","src_file":"/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go","message":"I am a Debug","src_line":"40","context":{"f2":"I go to school by MTR","f3":"Goodest cantonese"},"backtrace":"github.com/lalamove-go/logs_test.TestGetLalamoveLoggerPassErrorWithRootLevelNamespace\n\t/home/alpha/works/src/github.com/lalamove-go/logs/logs_test.go:40\ntesting.tRunner\n\t/home/alpha/go/src/testing/testing.go:777"}
 
     // Remember to close the logger
     defer lalamove.Logger().Sync()
