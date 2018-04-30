@@ -86,6 +86,7 @@ alpha.wong@lalamove.com
 - mikael.knutsson@lalamove.com
 - milan.r@lalamove.com
 - simon.tse@lalamove.com
+- hyper.jiang@lalamove.com
 
 # License
 Released under the MIT License.
