@@ -64,7 +64,7 @@ var (
 )
 
 // init a logger instance once only
-func init() {
+func initLogger() {
 	if nil == Log {
 		cfg := *NewConfig()
 		cfg.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
@@ -121,6 +121,7 @@ func LalamoveISO8601TimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) 
 // Extra field will inside fields namespace
 // return a *zap.Logger for logging
 func Logger() *zap.Logger {
+	initLogger()
 	// Skip this function by one
 	// ln int is line number of source file
 	_, _, ln, _ := runtime.Caller(1)
