@@ -59,17 +59,27 @@ const (
 )
 
 var (
-	Log *zap.Logger
+	Log    *zap.Logger
+	Config *zap.Config
 )
 
 // init a logger instance once only
 func init() {
 	if nil == Log {
-		cfg := zap.NewProductionConfig()
+		cfg := *NewConfig()
 		cfg.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
 		cfg.EncoderConfig = *NewLalamoveEncoderConfig()
 		Log, _ = cfg.Build()
 	}
+}
+
+// NewConfig will return a zap config
+func NewConfig() *zap.Config {
+	if nil == Config {
+		c := zap.NewProductionConfig()
+		Config = &c
+	}
+	return Config
 }
 
 // NewLalamoveEncoderConfig will create an EncoderConfig
