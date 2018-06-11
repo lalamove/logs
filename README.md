@@ -1,3 +1,5 @@
+[![pipeline status](https://gitlab.com/AlphaWong/logs/badges/master/pipeline.svg)](https://gitlab.com/AlphaWong/logs/commits/master)
+
 # Objective
 Offer a Golang logger based on Lalamove k8s logging format.
 
