@@ -72,10 +72,10 @@ go test -bench=. -benchmem
 # Benchmark
 ```
 lalamove-go/logs
-1000000	      1812 ns/op	    1542 B/op	       8 allocs/op
+ 1000000              1636 ns/op            1474 B/op          8 allocs/op
 
 go.uber.org/zap
-1000000	      1385 ns/op	    1479 B/op	       8 allocs/op
+ 1000000              1385 ns/op            1479 B/op          8 allocs/op
 ```
 
 # Report issue
