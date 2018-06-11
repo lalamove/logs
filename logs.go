@@ -37,6 +37,7 @@ package logs
 import (
 	"runtime"
 	"strconv"
+	"sync"
 	"time"
 
 	"go.uber.org/zap"
@@ -61,24 +62,25 @@ const (
 var (
 	Log    *zap.Logger
 	Config *zap.Config
+	once   sync.Once
 )
 
 // init a logger instance once only
 func initLogger() {
-	if nil == Log {
+	once.Do(func() {
 		cfg := *NewConfig()
 		cfg.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
 		cfg.EncoderConfig = *NewLalamoveEncoderConfig()
 		Log, _ = cfg.Build()
-	}
+	})
 }
 
 // NewConfig will return a zap config
 func NewConfig() *zap.Config {
-	if nil == Config {
+	once.Do(func() {
 		c := zap.NewProductionConfig()
 		Config = &c
-	}
+	})
 	return Config
 }
 

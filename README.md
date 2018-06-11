@@ -1,3 +1,5 @@
+[![pipeline status](https://gitlab.com/AlphaWong/logs/badges/master/pipeline.svg)](https://gitlab.com/AlphaWong/logs/commits/master)
+
 # Objective
 Offer a Golang logger based on Lalamove k8s logging format.
 
@@ -72,10 +74,10 @@ go test -bench=. -benchmem
 # Benchmark
 ```
 lalamove-go/logs
-1000000	      1812 ns/op	    1542 B/op	       8 allocs/op
+ 1000000              1636 ns/op            1474 B/op          8 allocs/op
 
 go.uber.org/zap
-1000000	      1385 ns/op	    1479 B/op	       8 allocs/op
+ 1000000              1385 ns/op            1479 B/op          8 allocs/op
 ```
 
 # Report issue
