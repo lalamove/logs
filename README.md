@@ -1,5 +1,5 @@
 [![pipeline status](https://gitlab.com/AlphaWong/logs/badges/master/pipeline.svg)](https://gitlab.com/AlphaWong/logs/commits/master)
-
+[![coverage report](https://codecov.io/gl/AlphaWong/logs/branch/master/graph/badge.svg)](https://codecov.io/gl/AlphaWong/logs)
 # Objective
 Offer a Golang logger based on Lalamove k8s logging format.
 
